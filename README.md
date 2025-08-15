@@ -75,10 +75,12 @@ This will prompt you for:
 
 ### Getting HelpScout API Credentials
 
-1. Go to [HelpScout Settings > Apps](https://secure.helpscout.net/settings/apps/)
-2. Click "Create My App"
-3. Enter a name and set the Redirect URL to `http://localhost:3000/callback`
-4. Save the App ID and App Secret
+1. Run `argus setup` first to get your Redirect URL (e.g., `http://localhost:3000/callback`)
+2. Go to [HelpScout Apps](https://secure.helpscout.net/users/apps)
+3. Click "Create App" 
+4. Enter a name and set the Redirect URL from step 1
+5. Save and copy your App ID and App Secret
+6. Enter them when prompted by `argus setup`
 
 ## Usage
 

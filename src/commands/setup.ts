@@ -13,8 +13,27 @@ const EnvSchema = z.object({
 
 export async function setupCommand() {
   console.log(chalk.cyan('🔧 HelpScout CLI Setup\n'));
-  console.log(chalk.gray('This will help you configure your HelpScout API credentials.'));
-  console.log(chalk.gray('You can get these from: https://secure.helpscout.net/settings/apps/\n'));
+  
+  const port = await input({
+    message: 'Enter the OAuth callback server port:',
+    default: '3000',
+    validate: (value) => {
+      const num = parseInt(value, 10);
+      if (isNaN(num)) return 'Port must be a number';
+      if (num < 1024 || num > 65535) return 'Port must be between 1024 and 65535';
+      return true;
+    },
+  });
+  
+  const redirectUri = `http://localhost:${port}/callback`;
+  
+  console.log(chalk.yellow('\n📌 Configure your HelpScout App with this Redirect URL:'));
+  console.log(chalk.cyan.bold(`   ${redirectUri}\n`));
+  console.log(chalk.gray('Steps to get your API credentials:'));
+  console.log(chalk.gray('1. Go to: https://secure.helpscout.net/users/apps'));
+  console.log(chalk.gray('2. Click "Create App" or edit an existing app'));
+  console.log(chalk.gray(`3. Set the Redirect URL to: ${redirectUri}`));
+  console.log(chalk.gray('4. Save and copy your App ID and App Secret\n'));
 
   try {
     const appId = await input({
@@ -26,19 +45,6 @@ export async function setupCommand() {
       message: 'Enter your HelpScout App Secret:',
       validate: (value) => value.length > 0 || 'App Secret is required',
     });
-
-    const port = await input({
-      message: 'Enter the OAuth callback server port:',
-      default: '3000',
-      validate: (value) => {
-        const num = parseInt(value, 10);
-        if (isNaN(num)) return 'Port must be a number';
-        if (num < 1024 || num > 65535) return 'Port must be between 1024 and 65535';
-        return true;
-      },
-    });
-
-    const redirectUri = `http://localhost:${port}/callback`;
     
     const config = {
       APP_ID: appId,
@@ -72,9 +78,9 @@ REDIRECT_URI=${redirectUri}
       const envPath = join(process.cwd(), '.env');
       await writeFile(envPath, envContent, 'utf-8');
       console.log(chalk.green('✅ Configuration saved to .env file'));
-      console.log(chalk.yellow('\n⚠️  Important: Add this Redirect URL to your HelpScout app:'));
-      console.log(chalk.cyan(`   ${redirectUri}\n`));
-      console.log(chalk.gray('You can update it at: https://secure.helpscout.net/settings/apps/'));
+      console.log(chalk.yellow('\n⚠️  Remember: Your HelpScout app must be configured with:'));
+      console.log(chalk.cyan(`   Redirect URL: ${redirectUri}\n`));
+      console.log(chalk.gray('Update it at: https://secure.helpscout.net/users/apps'));
     } else {
       console.log(chalk.yellow('Configuration not saved.'));
     }
