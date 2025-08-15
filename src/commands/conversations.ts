@@ -94,8 +94,10 @@ export async function downloadConversation(link: string, options: DownloadOption
       status: conversation.status,
       createdAt: conversation.createdAt,
       modifiedAt: conversation.modifiedAt,
-      closedAt: conversation.closedAt,
-      mailbox: conversation.mailbox,
+      closedAt: conversation.closedAt || null,
+      mailbox: conversation.mailbox || null,
+      createdBy: conversation.createdBy || null,
+      primaryCustomer: conversation.primaryCustomer || null,
       downloadedAt: new Date().toISOString(),
       attachmentCount: totalAttachments,
     }, null, 2), 'utf-8');

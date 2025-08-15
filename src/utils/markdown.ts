@@ -13,9 +13,15 @@ export function conversationToMarkdown(conversation: Conversation, attachmentPat
   if (conversation.closedAt) {
     lines.push(`- **Closed**: ${formatDate(conversation.closedAt)}`);
   }
-  lines.push(`- **Mailbox**: ${conversation.mailbox.name}`);
-  lines.push(`- **Created By**: ${formatPerson(conversation.createdBy)}`);
-  lines.push(`- **Customer**: ${formatPerson(conversation.primaryCustomer)}`);
+  if (conversation.mailbox?.name) {
+    lines.push(`- **Mailbox**: ${conversation.mailbox.name}`);
+  }
+  if (conversation.createdBy) {
+    lines.push(`- **Created By**: ${formatPerson(conversation.createdBy)}`);
+  }
+  if (conversation.primaryCustomer) {
+    lines.push(`- **Customer**: ${formatPerson(conversation.primaryCustomer)}`);
+  }
   lines.push('');
   lines.push('---');
   lines.push('');
