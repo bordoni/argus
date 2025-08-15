@@ -69,13 +69,13 @@ argus setup
 ```
 
 This will prompt you for:
+- **Port**: Local server port for OAuth callback (default: 3698)
 - **App ID**: Your HelpScout application ID
 - **App Secret**: Your HelpScout application secret  
-- **Port**: Local server port for OAuth callback (default: 3000)
 
 ### Getting HelpScout API Credentials
 
-1. Run `argus setup` first to get your Redirect URL (e.g., `http://localhost:3000/callback`)
+1. Run `argus setup` first to get your Redirect URL (e.g., `http://localhost:3698/auth`)
 2. Go to [HelpScout Apps](https://secure.helpscout.net/users/apps)
 3. Click "Create App" 
 4. Enter a name and set the Redirect URL from step 1

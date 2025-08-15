@@ -16,7 +16,7 @@ export async function setupCommand() {
   
   const port = await input({
     message: 'Enter the OAuth callback server port:',
-    default: '3000',
+    default: '3698',
     validate: (value) => {
       const num = parseInt(value, 10);
       if (isNaN(num)) return 'Port must be a number';
@@ -25,7 +25,7 @@ export async function setupCommand() {
     },
   });
   
-  const redirectUri = `http://localhost:${port}/callback`;
+  const redirectUri = `http://localhost:${port}/auth`;
   
   console.log(chalk.yellow('\n📌 Configure your HelpScout App with this Redirect URL:'));
   console.log(chalk.cyan.bold(`   ${redirectUri}\n`));

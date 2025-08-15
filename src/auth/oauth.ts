@@ -26,8 +26,8 @@ export class OAuthManager {
   constructor() {
     this.appId = process.env.APP_ID || '';
     this.appSecret = process.env.APP_SECRET || '';
-    this.port = parseInt(process.env.PORT || '3000', 10);
-    this.redirectUri = process.env.REDIRECT_URI || `http://localhost:${this.port}/callback`;
+    this.port = parseInt(process.env.PORT || '3698', 10);
+    this.redirectUri = process.env.REDIRECT_URI || `http://localhost:${this.port}/auth`;
 
     if (!this.appId || !this.appSecret) {
       throw new Error('APP_ID and APP_SECRET must be set in environment variables');
@@ -141,7 +141,7 @@ export class OAuthManager {
         async fetch(req) {
           const url = new URL(req.url);
           
-          if (url.pathname === '/callback') {
+          if (url.pathname === '/auth') {
             const code = url.searchParams.get('code');
             const returnedState = url.searchParams.get('state');
             
