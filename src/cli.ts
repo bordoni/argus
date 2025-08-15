@@ -29,16 +29,22 @@ const conversations = program
 conversations
   .command('download <link>')
   .description('Download a conversation and its attachments')
-  .option('-o, --output <dir>', 'Output directory', './conversations')
-  .action(async (link: string, options: { output: string }) => {
+  .option('-o, --output <dir>', 'Output directory')
+  .action(async (link: string, options: { output?: string }) => {
     const envPath = join(process.cwd(), '.env');
     if (!existsSync(envPath)) {
       console.log(chalk.yellow('⚠️  No .env file found. Please run "argus setup" first.'));
       process.exit(1);
     }
     
+    // Use OUTPUT_DIR from .env if no -o option provided
+    const defaultOutput = process.env.OUTPUT_DIR || './conversations';
+    const finalOptions = {
+      output: options.output || defaultOutput
+    };
+    
     const { downloadConversation } = await import('./commands/conversations');
-    await downloadConversation(link, options);
+    await downloadConversation(link, finalOptions);
   });
 
 program.parse();

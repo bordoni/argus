@@ -9,6 +9,7 @@ const EnvSchema = z.object({
   APP_SECRET: z.string().min(1),
   PORT: z.string().regex(/^\d+$/).transform(Number).pipe(z.number().min(1024).max(65535)),
   REDIRECT_URI: z.string().url().optional(),
+  OUTPUT_DIR: z.string().optional(),
 });
 
 export async function setupCommand() {
@@ -46,11 +47,18 @@ export async function setupCommand() {
       validate: (value) => value.length > 0 || 'App Secret is required',
     });
     
+    const outputDir = await input({
+      message: 'Enter default output directory for conversations:',
+      default: './conversations',
+      validate: (value) => value.length > 0 || 'Output directory is required',
+    });
+    
     const config = {
       APP_ID: appId,
       APP_SECRET: appSecret,
       PORT: port,
       REDIRECT_URI: redirectUri,
+      OUTPUT_DIR: outputDir,
     };
 
     const validation = EnvSchema.safeParse(config);
@@ -67,6 +75,9 @@ APP_ID=${appId}
 APP_SECRET=${appSecret}
 PORT=${port}
 REDIRECT_URI=${redirectUri}
+
+# Output Configuration
+OUTPUT_DIR=${outputDir}
 `;
 
     const save = await confirm({

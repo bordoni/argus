@@ -71,7 +71,8 @@ argus setup
 This will prompt you for:
 - **Port**: Local server port for OAuth callback (default: 3698)
 - **App ID**: Your HelpScout application ID
-- **App Secret**: Your HelpScout application secret  
+- **App Secret**: Your HelpScout application secret
+- **Output Directory**: Default location for downloaded conversations (default: ./conversations)  
 
 ### Getting HelpScout API Credentials
 
@@ -96,7 +97,7 @@ Where `<link>` can be:
 
 ### Options
 
-- `-o, --output <dir>`: Specify output directory (default: `./conversations`)
+- `-o, --output <dir>`: Override output directory (default: uses `OUTPUT_DIR` from .env or `./conversations`)
 
 ### Example
 
@@ -104,10 +105,27 @@ Where `<link>` can be:
 argus conversations download https://secure.helpscout.net/conversation/123456789/
 ```
 
+## Configuration
+
+The `.env` file created by `argus setup` contains:
+
+```env
+# HelpScout API Configuration
+APP_ID=your_app_id
+APP_SECRET=your_app_secret
+PORT=3698
+REDIRECT_URI=http://localhost:3698/auth
+
+# Output Configuration
+OUTPUT_DIR=./conversations  # Default location for downloads
+```
+
+You can edit this file to change the default output directory for all downloads.
+
 ## Output Structure
 
 ```
-conversations/
+conversations/        # Or your configured OUTPUT_DIR
 └── 123456789/
     ├── conversation_123456789.md   # Markdown formatted conversation
     ├── metadata.json                # Conversation metadata
