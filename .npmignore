@@ -1,0 +1,59 @@
+# Source files (not needed for npm package)
+*.ts
+!*.d.ts
+
+# Development files
+.env
+.env.*
+tsconfig.json
+bun.lockb
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
+coverage/
+
+# Build artifacts
+dist/
+argus
+*.exe
+
+# Config and tokens
+.argus/
+
+# Output
+conversations/
+
+# Documentation files (keep README)
+!README.md
+*.md
+!LICENSE
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
